@@ -1,6 +1,6 @@
 # New Property Monitor 🏠
 
-![Workflow Status](https://github.com/jumpei999/new-property-monitor/actions/workflows/daily-monitoring.yml/badge.svg)
+[![Workflow Status](https://github.com/jumpei999/new-property-monitor/actions/workflows/daily-monitoring.yml/badge.svg)](https://github.com/jumpei999/new-property-monitor/actions/workflows/daily-monitoring.yml)
 
 A lightweight, automated web scraping tool designed to monitor real estate listings. Built with **TypeScript**, **Playwright**, and **pnpm**, it runs daily via **GitHub Actions** and stores data in a separate branch to keep the repository clean.
 
