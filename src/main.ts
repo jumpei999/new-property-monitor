@@ -26,19 +26,48 @@ const context = await browser.newContext({
 })
 
 try {
-  const results: Property[][] = await Promise.all([
+  const results = await Promise.allSettled([
     scrapeYuzawaResort(browser, Condition.PETS_ALLOWED),
     scrapeYuzawaResort(browser, Condition.PETS_NEGOTIABLE),
     scrapeAngelFudosan(browser),
     scrapeYuzawaShoji(context),
   ])
-  const newProperties: Property[] = results.flat()
 
-  if (newProperties.length > 0) notifyToSlack(newProperties)
+  const newProperties: Property[] = results
+    .filter(
+      (r): r is PromiseFulfilledResult<Property[]> => r.status === "fulfilled",
+    )
+    .flatMap((r) => r.value)
+
+  const processNames = [
+    "Yuzawa Resort (Pets Arrowed)",
+    "Yuzawa Resort (Pets Negotiable)",
+    "Angel Fudosan",
+    "Yuzawa Shoji",
+  ]
+  let hasError = false
+  results.forEach((r, i) => {
+    if (r.status === "rejected") {
+      console.error(`❌ Failed to process “${processNames[i]}”: `, r.reason)
+      hasError = true
+    }
+  })
+
+  const runId = process.env.GITHUB_RUN_ID
+  const repository = process.env.GITHUB_REPOSITORY
+  const serverUrl = process.env.GITHUB_SERVER_URL
+
+  const actionUrl = runId
+    ? `${serverUrl}/${repository}/actions/runs/${runId}`
+    : "Local Execution"
+
+  if (newProperties.length > 0 || hasError)
+    await notifyToSlack(newProperties, hasError, actionUrl)
 
   console.info("⏫ Process completed")
-} catch (error) {
-  console.error("❗ An error occurred: ", error)
+} catch (e) {
+  console.error("❌ Unexpected fatal error:", e)
+  process.exit(1)
 } finally {
   await browser.close()
 }
