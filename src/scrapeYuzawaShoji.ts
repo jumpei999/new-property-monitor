@@ -30,7 +30,12 @@ export const scrapeYuzawaShoji = async (
     $("td.title").each((_, el) => {
       const anchor = $(el).find("a").first()
       const href = anchor.attr("href")
-      const title = anchor.text().trim().replaceAll("NEW\n", "")
+      const title = anchor
+        .text()
+        .trim()
+        .replaceAll("NEW\n", "")
+        .replaceAll("商談中\n", "")
+        .replaceAll("\n", "")
 
       if (href) {
         const regex: RegExp = /(\d+-\d+)/
