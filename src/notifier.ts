@@ -1,7 +1,9 @@
 import axios from "axios"
 import type { Property } from "@/types.js"
+import type { KnownBlock } from "@slack/types"
+import { env } from "@/env.js"
 
-const slackWebhookUri = process.env.SLACK_WEBHOOK_URL as string
+const slackWebhookUri = env.SLACK_WEBHOOK_URL
 
 export const notifyToSlack = async (
   properties: Property[],
@@ -10,7 +12,7 @@ export const notifyToSlack = async (
 ) => {
   console.info("⏬ Slack notifications started")
 
-  const blocks: any[] = []
+  const blocks: KnownBlock[] = []
 
   blocks.push({
     type: "header",
@@ -22,7 +24,6 @@ export const notifyToSlack = async (
           : "⚠️ Error notification",
       emoji: true,
     },
-    level: 1,
   })
 
   if (properties.length > 0) {

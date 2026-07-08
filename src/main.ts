@@ -1,23 +1,19 @@
 import "dotenv/config"
 import { chromium } from "playwright"
-import fs from "node:fs"
-import path from "node:path"
-import { fileURLToPath } from "node:url"
-import type { Property } from "./types.js"
-import { notifyToSlack } from "./notifier.js"
-import { Condition, scrapeYuzawaResort } from "@/scrapeYuzawaResort.js"
-import { scrapeAngelFudosan } from "./scrapeAngelFudosan.js"
-import { scrapeYuzawaShoji } from "./scrapeYuzawaShoji.js"
+import type { Property } from "@/types.js"
+import { notifyToSlack } from "@/notifier.js"
+import {
+  scrapeYuzawaResort,
+  YUZAWA_RESORT_SEARCH_CONDITION,
+} from "@/scrape-yuzawa-resort.js"
+import { scrapeAngelFudosan } from "@/scrape-angel-fudosan.js"
+import { scrapeYuzawaShoji } from "@/scrape-yuzawa-shoji.js"
+import { env } from "@/env.js"
+import { ensureDataDir } from "@/config.js"
 
 console.info("⏬ Process started")
 
-export const outputDir = path.join(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "../data",
-)
-if (!fs.existsSync(outputDir)) {
-  fs.mkdirSync(outputDir, { recursive: true })
-}
+ensureDataDir()
 
 const browser = await chromium.launch({ headless: true })
 const context = await browser.newContext({
@@ -26,12 +22,27 @@ const context = await browser.newContext({
 })
 
 try {
-  const results = await Promise.allSettled([
-    scrapeYuzawaResort(browser, Condition.PETS_ALLOWED),
-    scrapeYuzawaResort(browser, Condition.PETS_NEGOTIABLE),
-    scrapeAngelFudosan(browser),
-    scrapeYuzawaShoji(context),
-  ])
+  const scrapers = [
+    {
+      name: "Yuzawa Resort (Pets Allowed)",
+      run: () =>
+        scrapeYuzawaResort(
+          context,
+          YUZAWA_RESORT_SEARCH_CONDITION.PETS_ALLOWED,
+        ),
+    },
+    {
+      name: "Yuzawa Resort (Pets Negotiable)",
+      run: () =>
+        scrapeYuzawaResort(
+          context,
+          YUZAWA_RESORT_SEARCH_CONDITION.PETS_NEGOTIABLE,
+        ),
+    },
+    { name: "Angel Fudosan", run: () => scrapeAngelFudosan(context) },
+    { name: "Yuzawa Shoji", run: () => scrapeYuzawaShoji(context) },
+  ]
+  const results = await Promise.allSettled(scrapers.map((s) => s.run()))
 
   const newProperties: Property[] = results
     .filter(
@@ -39,23 +50,19 @@ try {
     )
     .flatMap((r) => r.value)
 
-  const processNames = [
-    "Yuzawa Resort (Pets Arrowed)",
-    "Yuzawa Resort (Pets Negotiable)",
-    "Angel Fudosan",
-    "Yuzawa Shoji",
-  ]
   let hasError = false
   results.forEach((r, i) => {
     if (r.status === "rejected") {
-      console.error(`❌ Failed to process “${processNames[i]}”: `, r.reason)
+      console.error(`❌ Failed to process “${scrapers[i]?.name}”: `, r.reason)
       hasError = true
     }
   })
 
-  const runId = process.env.GITHUB_RUN_ID
-  const repository = process.env.GITHUB_REPOSITORY
-  const serverUrl = process.env.GITHUB_SERVER_URL
+  const {
+    GITHUB_RUN_ID: runId,
+    GITHUB_REPOSITORY: repository,
+    GITHUB_SERVER_URL: serverUrl,
+  } = env
 
   const actionUrl = runId
     ? `${serverUrl}/${repository}/actions/runs/${runId}`
