@@ -9,7 +9,7 @@ export const scrapeAkiyaAthome = async (
     name: "Akiya Athome",
     url: "https://www.akiya-athome.jp/rent/20/?gyosei_cd%5B%5D=20211&gyosei_cd%5B%5D=20486&gyosei_cd%5B%5D=20563&gyosei_cd%5B%5D=20583&proc_search=",
     fileName: "akiya-athome.json",
-    waitSelector: "#bukken_list section.propety",
+    waitSelector: "#bukken_list",
     itemSelector: "#bukken_list section.propety",
     extract: ($, el) => {
       const anchor = $(el).find(".propetyTitle a").first()

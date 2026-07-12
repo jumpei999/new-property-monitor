@@ -13,6 +13,7 @@ A lightweight, automated web scraping tool designed to monitor real estate listi
   - Akiya Athome (Nakano, Otari, Nozawa Onsen, and Shinano)
   - Rakuen Akiya (Nagano)
   - Shinanomachi Iju
+  - SUUMO (Niigata / Nagano / Fukushima / Gunma, pets negotiable)
 - **Automated Scraping**: Periodically checks for new properties using Playwright.
 - **Smart Data Persistence**: Stores results in a dedicated `data` branch, separating code history from data updates.
 - **Slack Integration**: Notifies when new listings are found, or when a scrape fails (with a link to the Actions run).

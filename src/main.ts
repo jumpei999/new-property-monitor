@@ -11,6 +11,7 @@ import { scrapeYuzawaShoji } from "@/scrape-yuzawa-shoji.js"
 import { scrapeAkiyaAthome } from "@/scrape-akiya-athome.js"
 import { scrapeRakuenAkiya } from "@/scrape-rakuen-akiya.js"
 import { scrapeShinanomachiIju } from "@/scrape-shinanomachi-iju.js"
+import { scrapeSuumo, SUUMO_SEARCH_CONDITION } from "@/scrape-suumo.js"
 import { env } from "@/env.js"
 import { ensureDataDir } from "@/config.js"
 
@@ -47,6 +48,22 @@ try {
     { name: "Akiya Athome", run: () => scrapeAkiyaAthome(context) },
     { name: "Rakuen Akiya", run: () => scrapeRakuenAkiya(context) },
     { name: "Shinanomachi Iju", run: () => scrapeShinanomachiIju(context) },
+    {
+      name: "Suumo (Niigata)",
+      run: () => scrapeSuumo(context, SUUMO_SEARCH_CONDITION.NIIGATA),
+    },
+    {
+      name: "Suumo (Nagano)",
+      run: () => scrapeSuumo(context, SUUMO_SEARCH_CONDITION.NAGANO),
+    },
+    {
+      name: "Suumo (Fukushima)",
+      run: () => scrapeSuumo(context, SUUMO_SEARCH_CONDITION.FUKUSHIMA),
+    },
+    {
+      name: "Suumo (Gunma)",
+      run: () => scrapeSuumo(context, SUUMO_SEARCH_CONDITION.GUNMA),
+    },
   ]
   const results = await Promise.allSettled(scrapers.map((s) => s.run()))
 

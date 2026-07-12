@@ -4,6 +4,29 @@ import type { KnownBlock } from "@slack/types"
 import { env } from "@/env.js"
 
 const slackWebhookUri = env.SLACK_WEBHOOK_URL
+const SLACK_SECTION_TEXT_LIMIT = 3000
+
+function chunkPropertyLines(properties: Property[]): string[] {
+  const lines = properties.map((p) => `• <${p.link}|${p.title}>`)
+  const chunks: string[] = []
+  let current = ""
+
+  for (const line of lines) {
+    const next = current ? `${current}\n${line}` : line
+    if (next.length > SLACK_SECTION_TEXT_LIMIT) {
+      if (current) chunks.push(current)
+      current =
+        line.length > SLACK_SECTION_TEXT_LIMIT
+          ? `${line.slice(0, SLACK_SECTION_TEXT_LIMIT - 1)}…`
+          : line
+    } else {
+      current = next
+    }
+  }
+
+  if (current) chunks.push(current)
+  return chunks
+}
 
 export const notifyToSlack = async (
   properties: Property[],
@@ -27,26 +50,21 @@ export const notifyToSlack = async (
   })
 
   if (properties.length > 0) {
-    const content = properties.map((p) => `• <${p.link}|${p.title}>`).join("\n")
-    blocks.push(
-      {
-        type: "divider",
-      },
-      {
+    blocks.push({ type: "divider" })
+    for (const text of chunkPropertyLines(properties)) {
+      blocks.push({
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `${content}`,
+          text,
         },
-      },
-    )
+      })
+    }
   }
 
   if (hasError) {
     blocks.push(
-      {
-        type: "divider",
-      },
+      { type: "divider" },
       {
         type: "section",
         text: {
@@ -75,5 +93,15 @@ export const notifyToSlack = async (
     }
   }
 
-  await axios.post(slackWebhookUri, { blocks })
+  try {
+    await axios.post(slackWebhookUri, { blocks })
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        `Slack notification failed: ${error.response?.status ?? error.code}`,
+        { cause: error.response?.data },
+      )
+    }
+    throw error
+  }
 }

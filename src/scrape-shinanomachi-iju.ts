@@ -9,7 +9,7 @@ export const scrapeShinanomachiIju = async (
     name: "Shinanomachi Iju",
     url: "https://shinanomachi-iju.jp/akiya/?property_type=rent",
     fileName: "shinanomachi-iju.json",
-    waitSelector: "#archive-list .akiya-list-item",
+    waitSelector: "#archive-list",
     itemSelector: "#archive-list .akiya-list-item",
     extract: ($, el) => {
       const anchor = $(el).find("a.list-link").first()
