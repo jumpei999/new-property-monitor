@@ -1,10 +1,6 @@
 import type { BrowserContext } from "playwright"
-import * as cheerio from "cheerio"
-import path from "node:path"
 import type { Property } from "@/types.js"
-import { dataDir } from "@/config.js"
-import { detectNewProperties, savePropertyIds } from "@/persistence.js"
-import { parseProperties } from "@/parse-properties.js"
+import { scrapeListPage } from "@/scrape-list-page.js"
 
 export const YUZAWA_RESORT_SEARCH_CONDITION = {
   PETS_ALLOWED: "Pets Allowed",
@@ -27,44 +23,21 @@ const SEARCH_CONDITION_CONFIGS = {
 export const scrapeYuzawaResort = async (
   context: BrowserContext,
   condition: YuzawaResortSearchCondition,
-): Promise<Property[]> => {
-  console.info(`⏬ Yuzawa Resort (${condition}) scraping started`)
-
-  const url =
-    "https://yuzawaresort.jp/rent/#contents?facility[]=" +
-    SEARCH_CONDITION_CONFIGS[condition].urlSuffix
-  const file = path.join(dataDir, SEARCH_CONDITION_CONFIGS[condition].fileName)
-
-  const page = await context.newPage()
-  try {
-    await page.goto(url)
-    await page.waitForSelector("ul.reals", { timeout: 10000 })
-
-    const content = await page.content()
-    const $ = cheerio.load(content)
-    const allProperties = parseProperties($, {
-      itemSelector: "ul.reals > li",
-      extract: ($, el) => {
-        const anchor = $(el).find("h4 > a").first()
-        return {
-          href: anchor.attr("href"),
-          title: anchor.text().trim(),
-        }
-      },
-      idPattern: /\.\/rent\/(\d+)\.html#contents/,
-      baseUrl: url,
-    })
-
-    if (allProperties.length === 0) {
-      console.warn(`⚠️ No properties were found: Yuzawa Resort (${condition})`)
-      return allProperties
-    }
-
-    const newProperties = detectNewProperties(allProperties, file)
-    savePropertyIds(allProperties, file)
-
-    return newProperties
-  } finally {
-    await page.close()
-  }
-}
+): Promise<Property[]> =>
+  scrapeListPage(context, {
+    name: `Yuzawa Resort (${condition})`,
+    url:
+      "https://yuzawaresort.jp/rent/#contents?facility[]=" +
+      SEARCH_CONDITION_CONFIGS[condition].urlSuffix,
+    fileName: SEARCH_CONDITION_CONFIGS[condition].fileName,
+    waitSelector: "ul.reals",
+    itemSelector: "ul.reals > li",
+    extract: ($, el) => {
+      const anchor = $(el).find("h4 > a").first()
+      return {
+        href: anchor.attr("href"),
+        title: anchor.text().trim(),
+      }
+    },
+    idPattern: /\.\/rent\/(\d+)\.html#contents/,
+  })

@@ -6,7 +6,13 @@ A lightweight, automated web scraping tool designed to monitor real estate listi
 
 ## 🚀 Features
 
-- **Monitored Sites**: Angel Fudosan, Yuzawa Resort (pets allowed / pets negotiable), and Yuzawa Shoji.
+- **Monitored Sites**:
+  - Yuzawa Resort (pets allowed / pets negotiable)
+  - Angel Fudosan
+  - Yuzawa Shoji
+  - Akiya Athome (Nakano, Otari, Nozawa Onsen, and Shinano)
+  - Rakuen Akiya (Nagano)
+  - Shinanomachi Iju
 - **Automated Scraping**: Periodically checks for new properties using Playwright.
 - **Smart Data Persistence**: Stores results in a dedicated `data` branch, separating code history from data updates.
 - **Slack Integration**: Notifies when new listings are found, or when a scrape fails (with a link to the Actions run).
@@ -36,6 +42,7 @@ Source layout on `main`:
 ```text
 src/
   main.ts                 # Orchestration
+  scrape-list-page.ts     # Shared list-page scrape helper
   scrape-*.ts             # Site scrapers
   parse-properties.ts     # HTML → property list
   persistence.ts          # Detect / save known IDs

@@ -8,6 +8,9 @@ import {
 } from "@/scrape-yuzawa-resort.js"
 import { scrapeAngelFudosan } from "@/scrape-angel-fudosan.js"
 import { scrapeYuzawaShoji } from "@/scrape-yuzawa-shoji.js"
+import { scrapeAkiyaAthome } from "@/scrape-akiya-athome.js"
+import { scrapeRakuenAkiya } from "@/scrape-rakuen-akiya.js"
+import { scrapeShinanomachiIju } from "@/scrape-shinanomachi-iju.js"
 import { env } from "@/env.js"
 import { ensureDataDir } from "@/config.js"
 
@@ -41,6 +44,9 @@ try {
     },
     { name: "Angel Fudosan", run: () => scrapeAngelFudosan(context) },
     { name: "Yuzawa Shoji", run: () => scrapeYuzawaShoji(context) },
+    { name: "Akiya Athome", run: () => scrapeAkiyaAthome(context) },
+    { name: "Rakuen Akiya", run: () => scrapeRakuenAkiya(context) },
+    { name: "Shinanomachi Iju", run: () => scrapeShinanomachiIju(context) },
   ]
   const results = await Promise.allSettled(scrapers.map((s) => s.run()))
 
