@@ -7,13 +7,13 @@ A lightweight, automated web scraping tool designed to monitor real estate listi
 ## 🚀 Features
 
 - **Monitored Sites**:
-  - Yuzawa Resort (pets allowed / pets negotiable)
-  - Angel Fudosan
-  - Yuzawa Shoji
-  - Akiya Athome (Nakano, Otari, Nozawa Onsen, and Shinano)
-  - Rakuen Akiya (Nagano)
-  - Shinanomachi Iju
-  - SUUMO (Niigata / Nagano / Fukushima / Gunma, pets negotiable)
+  - [Angel Fudosan](https://www.angel-f.com/)
+  - [At Home](https://www.akiya-athome.jp/)
+  - [Rakuen Akiya](https://rakuen-akiya.jp/)
+  - [SUUMO](https://suumo.jp/)
+  - [Yuzawa Resort](https://yuzawaresort.jp/)
+  - [Yuzawa Shoji](https://www.yuzawacorp.jp/)
+  - [ある日、森のなか。](https://shinanomachi-iju.jp/)
 - **Automated Scraping**: Periodically checks for new properties using Playwright.
 - **Smart Data Persistence**: Stores results in a dedicated `data` branch, separating code history from data updates.
 - **Slack Integration**: Notifies when new listings are found, or when a scrape fails (with a link to the Actions run).

@@ -8,7 +8,10 @@ import {
 } from "@/scrape-yuzawa-resort.js"
 import { scrapeAngelFudosan } from "@/scrape-angel-fudosan.js"
 import { scrapeYuzawaShoji } from "@/scrape-yuzawa-shoji.js"
-import { scrapeAkiyaAthome } from "@/scrape-akiya-athome.js"
+import {
+  scrapeAkiyaAthome,
+  AKIYA_ATHOME_SEARCH_CONDITION,
+} from "@/scrape-akiya-athome.js"
 import { scrapeRakuenAkiya } from "@/scrape-rakuen-akiya.js"
 import { scrapeShinanomachiIju } from "@/scrape-shinanomachi-iju.js"
 import { scrapeSuumo, SUUMO_SEARCH_CONDITION } from "@/scrape-suumo.js"
@@ -45,7 +48,26 @@ try {
     },
     { name: "Angel Fudosan", run: () => scrapeAngelFudosan(context) },
     { name: "Yuzawa Shoji", run: () => scrapeYuzawaShoji(context) },
-    { name: "Akiya Athome", run: () => scrapeAkiyaAthome(context) },
+    {
+      name: "Akiya Athome (Nagano)",
+      run: () =>
+        scrapeAkiyaAthome(context, AKIYA_ATHOME_SEARCH_CONDITION.NAGANO),
+    },
+    {
+      name: "Akiya Athome (Niigata)",
+      run: () =>
+        scrapeAkiyaAthome(context, AKIYA_ATHOME_SEARCH_CONDITION.NIIGATA),
+    },
+    {
+      name: "Akiya Athome (Fukushima)",
+      run: () =>
+        scrapeAkiyaAthome(context, AKIYA_ATHOME_SEARCH_CONDITION.FUKUSHIMA),
+    },
+    {
+      name: "Akiya Athome (Gunma)",
+      run: () =>
+        scrapeAkiyaAthome(context, AKIYA_ATHOME_SEARCH_CONDITION.GUNMA),
+    },
     { name: "Rakuen Akiya", run: () => scrapeRakuenAkiya(context) },
     { name: "Shinanomachi Iju", run: () => scrapeShinanomachiIju(context) },
     {
