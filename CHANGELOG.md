@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/jumpei999/new-property-monitor/compare/v1.3.0...v1.4.0) (2026-07-20)
+
+
+### Features
+
+* rotate Akiya Athome scraping to one region per day ([cb3131e](https://github.com/jumpei999/new-property-monitor/commit/cb3131e7cb70ee58db461a770a349e8e3b91a0b9))
+
 # [1.3.0](https://github.com/jumpei999/new-property-monitor/compare/v1.2.0...v1.3.0) (2026-07-13)
 
 
