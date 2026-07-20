@@ -11,6 +11,19 @@ export const AKIYA_ATHOME_SEARCH_CONDITION = {
 type AkiyaAthomeSearchCondition =
   (typeof AKIYA_ATHOME_SEARCH_CONDITION)[keyof typeof AKIYA_ATHOME_SEARCH_CONDITION]
 
+const AKIYA_ATHOME_ROTATION = [
+  AKIYA_ATHOME_SEARCH_CONDITION.NAGANO,
+  AKIYA_ATHOME_SEARCH_CONDITION.NIIGATA,
+  AKIYA_ATHOME_SEARCH_CONDITION.FUKUSHIMA,
+  AKIYA_ATHOME_SEARCH_CONDITION.GUNMA,
+] as const
+
+export const getTodayAkiyaAthomeCondition = (): AkiyaAthomeSearchCondition => {
+  const index =
+    Math.floor(Date.now() / 86_400_000) % AKIYA_ATHOME_ROTATION.length
+  return AKIYA_ATHOME_ROTATION[index]!
+}
+
 const SEARCH_CONDITION_CONFIGS = {
   [AKIYA_ATHOME_SEARCH_CONDITION.NAGANO]: {
     fileName: "akiya-athome-nagano.json",

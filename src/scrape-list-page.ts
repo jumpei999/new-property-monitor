@@ -32,7 +32,14 @@ export async function scrapeListPage(
   const page = await context.newPage()
 
   try {
-    await page.goto(config.url)
+    const response = await page.goto(config.url)
+    if (!response) {
+      throw new Error(`No response from ${config.url}`)
+    }
+    if (response.status() >= 400) {
+      throw new Error(`HTTP ${response.status()} from ${config.url}`)
+    }
+
     await page.waitForSelector(config.waitSelector, {
       timeout: config.timeout ?? 10000,
     })

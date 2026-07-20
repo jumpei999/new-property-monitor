@@ -18,7 +18,7 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "packageManager": "pnpm@11.10.0",
+  "packageManager": "pnpm@11.15.0",
   "dependencies": {
     "@slack/types": "^2.22.0",
     "axios": "^1.18.1",
@@ -39,8 +39,8 @@
     "commitizen": "^4.3.2",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^9.1.7",
-    "semantic-release": "^25.0.6",
-    "tsx": "^4.23.0",
+    "semantic-release": "^25.0.8",
+    "tsx": "^4.23.1",
     "typescript": "^6.0.3"
   }
 }
