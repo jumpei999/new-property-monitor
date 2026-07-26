@@ -6,6 +6,7 @@
   "main": "main.ts",
   "scripts": {
     "start": "tsx src/main.ts",
+    "start:akiya-athome": "tsx src/main-akiya-athome.ts",
     "commit": "cz",
     "prepare": "husky",
     "release": "semantic-release"
@@ -18,14 +19,14 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "packageManager": "pnpm@11.15.0",
+  "packageManager": "pnpm@11.17.0",
   "dependencies": {
     "@slack/types": "^2.22.0",
     "axios": "^1.18.1",
     "cheerio": "^1.2.0",
     "domhandler": "^6.0.1",
     "dotenv": "^17.4.2",
-    "playwright": "^1.61.1",
+    "playwright": "^1.62.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

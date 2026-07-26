@@ -8,10 +8,6 @@ import {
 } from "@/scrape-yuzawa-resort.js"
 import { scrapeAngelFudosan } from "@/scrape-angel-fudosan.js"
 import { scrapeYuzawaShoji } from "@/scrape-yuzawa-shoji.js"
-import {
-  scrapeAkiyaAthome,
-  getTodayAkiyaAthomeCondition,
-} from "@/scrape-akiya-athome.js"
 import { scrapeRakuenAkiya } from "@/scrape-rakuen-akiya.js"
 import { scrapeShinanomachiIju } from "@/scrape-shinanomachi-iju.js"
 import { scrapeSuumo, SUUMO_SEARCH_CONDITION } from "@/scrape-suumo.js"
@@ -29,9 +25,6 @@ const context = await browser.newContext({
 })
 
 try {
-  const todayAkiyaAthomeCondition = getTodayAkiyaAthomeCondition()
-  console.info(`📅 Today's Akiya Athome region: ${todayAkiyaAthomeCondition}`)
-
   const scrapers = [
     {
       name: "Yuzawa Resort (Pets Allowed)",
@@ -51,10 +44,6 @@ try {
     },
     { name: "Angel Fudosan", run: () => scrapeAngelFudosan(context) },
     { name: "Yuzawa Shoji", run: () => scrapeYuzawaShoji(context) },
-    {
-      name: `Akiya Athome (${todayAkiyaAthomeCondition})`,
-      run: () => scrapeAkiyaAthome(context, todayAkiyaAthomeCondition),
-    },
     { name: "Rakuen Akiya", run: () => scrapeRakuenAkiya(context) },
     { name: "Shinanomachi Iju", run: () => scrapeShinanomachiIju(context) },
     {
