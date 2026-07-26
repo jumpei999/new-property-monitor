@@ -4,5 +4,6 @@ export const propertySchema = z.object({
   id: z.string(),
   title: z.string(),
   link: z.string(),
+  source: z.string(),
 })
 export type Property = z.infer<typeof propertySchema>

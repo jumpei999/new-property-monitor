@@ -41,6 +41,7 @@ export const scrapeYuzawaShoji = async (
       },
       idPattern: /(\d{1,8}-\d{1,12})/,
       baseUrl: url,
+      source: "Yuzawa Shoji",
     })
 
     if (allProperties.length === 0) {

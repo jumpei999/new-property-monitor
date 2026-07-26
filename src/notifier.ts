@@ -6,8 +6,32 @@ import { env } from "@/env.js"
 const slackWebhookUri = env.SLACK_WEBHOOK_URL
 const SLACK_SECTION_TEXT_LIMIT = 3000
 
+function groupPropertiesBySource(
+  properties: Property[],
+): Map<string, Property[]> {
+  const groups = new Map<string, Property[]>()
+  for (const property of properties) {
+    const existing = groups.get(property.source)
+    if (existing) {
+      existing.push(property)
+    } else {
+      groups.set(property.source, [property])
+    }
+  }
+  return groups
+}
+
 function chunkPropertyLines(properties: Property[]): string[] {
-  const lines = properties.map((p) => `• <${p.link}|${p.title}>`)
+  const sections = [...groupPropertiesBySource(properties).entries()].map(
+    ([source, items]) => {
+      const lines = items.map((p) => `• <${p.link}|${p.title}>`)
+      return `*${source}*\n${lines.join("\n")}`
+    },
+  )
+  const lines = sections.flatMap((section, index) => {
+    const sectionLines = section.split("\n")
+    return index === 0 ? sectionLines : ["", ...sectionLines]
+  })
   const chunks: string[] = []
   let current = ""
 

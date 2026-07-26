@@ -10,6 +10,7 @@ type ParseConfig = {
   ) => { href: string | undefined; title: string }
   idPattern: RegExp
   baseUrl: string
+  source: string
 }
 
 export function parseProperties(
@@ -30,6 +31,7 @@ export function parseProperties(
         id: idMatch[1],
         title,
         link: new URL(href, config.baseUrl).href,
+        source: config.source,
       }),
     )
   })

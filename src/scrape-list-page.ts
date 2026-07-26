@@ -50,6 +50,7 @@ export async function scrapeListPage(
       extract: config.extract,
       idPattern: config.idPattern,
       baseUrl: config.url,
+      source: config.name,
     })
 
     if (allProperties.length === 0) {
