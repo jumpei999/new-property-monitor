@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/jumpei999/new-property-monitor/compare/v1.4.0...v1.5.0) (2026-07-26)
+
+
+### Features
+
+* run Akiya Athome scraping locally off GitHub Actions ([2e58384](https://github.com/jumpei999/new-property-monitor/commit/2e583849cc459ebe63f5533d62263540d6b7e434))
+
 # [1.4.0](https://github.com/jumpei999/new-property-monitor/compare/v1.3.0...v1.4.0) (2026-07-20)
 
 
