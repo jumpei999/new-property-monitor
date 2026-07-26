@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/jumpei999/new-property-monitor/compare/v1.5.0...v1.6.0) (2026-07-26)
+
+
+### Features
+
+* add source sections to Slack notifications ([8ba4761](https://github.com/jumpei999/new-property-monitor/commit/8ba476192a9b5fb9fde44045ad3f15e8e3381d27))
+
 # [1.5.0](https://github.com/jumpei999/new-property-monitor/compare/v1.4.0...v1.5.0) (2026-07-26)
 
 
