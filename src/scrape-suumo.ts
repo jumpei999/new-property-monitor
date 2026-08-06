@@ -15,7 +15,8 @@ type SuumoSearchCondition =
 const SEARCH_CONDITION_CONFIGS = {
   [SUUMO_SEARCH_CONDITION.NAGANO]: {
     fileName: "suumo-nagano.json",
-    url: "https://suumo.jp/jj/chintai/ichiran/FR301FC005/?ar=040&bs=040&ta=20&sc=20201&sc=20202&sc=20211&sc=20212&sc=20213&sc=20480&sc=20560&cb=0.0&ct=9999999&mb=0&mt=9999999&et=9999999&cn=9999999&tc=0401102&shkr1=03&shkr2=03&shkr3=03&shkr4=03&sngz=&po1=09&po2=99&pc=100",
+    url: "https://suumo.jp/jj/chintai/ichiran/FR301FC005/?ar=040&bs=040&ta=20&sc=20211&sc=20212&sc=20213&sc=20480&sc=20560&cb=0.0&ct=9999999&mb=0&mt=9999999&et=9999999&cn=9999999&tc=0401102&shkr1=03&shkr2=03&shkr3=03&shkr4=03&sngz=&po1=09&po2=99&pc=100",
+    // url: "https://suumo.jp/jj/chintai/ichiran/FR301FC005/?ar=040&bs=040&ta=20&sc=20201&sc=20202&sc=20211&sc=20212&sc=20213&sc=20480&sc=20560&cb=0.0&ct=9999999&mb=0&mt=9999999&et=9999999&cn=9999999&tc=0401102&shkr1=03&shkr2=03&shkr3=03&shkr4=03&sngz=&po1=09&po2=99&pc=100",
   },
   [SUUMO_SEARCH_CONDITION.NIIGATA]: {
     fileName: "suumo-niigata.json",

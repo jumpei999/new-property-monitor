@@ -2,7 +2,7 @@
 
 [![Workflow Status](https://github.com/jumpei999/new-property-monitor/actions/workflows/daily-monitoring.yml/badge.svg)](https://github.com/jumpei999/new-property-monitor/actions/workflows/daily-monitoring.yml)
 
-A lightweight, automated web scraping tool designed to monitor real estate listings. Built with **TypeScript**, **Playwright**, and **pnpm**, it runs daily via **GitHub Actions** and stores data in a separate branch to keep the repository clean.
+A lightweight, automated web scraping tool designed to monitor real estate listings. Built with **TypeScript**, **Playwright**, and **pnpm**, it runs weekly via **GitHub Actions** and stores data in a separate branch to keep the repository clean.
 
 ## 🚀 Features
 
@@ -154,7 +154,7 @@ Load with `launchctl load ~/Library/LaunchAgents/com.new-property-monitor.akiya-
 
 The scraper is configured to run automatically via the `.github/workflows/daily-monitoring.yml` file.
 
-- **Schedule**: Every day at 00:00 UTC (09:00 JST).
+- **Schedule**: Every Monday at 00:00 UTC (09:00 JST).
 - **Manual Trigger**: You can trigger the workflow from the **Actions** tab in GitHub.
 - **Scope**: All monitored sites **except** Akiya Athome (run locally with `pnpm start:akiya-athome`).
 
